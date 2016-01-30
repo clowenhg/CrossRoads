@@ -49,10 +49,11 @@ class CrossRoadsGrid {
 		else if (node.x > 0 && node.x < row.length) {
 			connectionsCount += 2;
 		}
+		
+		return connectionsCount;
 	}
 	
 	randomize() {
 		throw "Not Yet Implemented!  Cause I'm fucking tired..."
 	}
-	
 }
