@@ -11,7 +11,7 @@
   var webpack = require('gulp-webpack');
 
   gulp.task('pack', function(){
-    return gulp.src('app/index.js')
+    return gulp.src('app/CrossRoads.js')
       .pipe(webpack({
         watch: true,
         output: {
