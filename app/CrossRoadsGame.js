@@ -16,11 +16,10 @@ class CrossRoadsGame {
     get newTrafficPath() { return this._newTrafficPath; }
     get dayCount() { return this._dayCount; }
     get mostSuccessfulPaths() { return this._mostSuccessfulPaths; }
-    //get allTrafficPathsComplete() { return }
     
     startLevel() {
-        this._grid = new TrafficGrid(100, 100);
-        this._grid.randomize();
+        this._grid = new TrafficGrid(10, 10);
+        this._grid.makeFullMesh();
         
         this._trafficPaths = [];
         this._dayCount = 0;
@@ -41,7 +40,7 @@ class CrossRoadsGame {
     }
     
     update() {
-        _updateTrafficPaths();
+        this._updateTrafficPaths();
     }
     
     _updateTrafficPaths() {
@@ -53,37 +52,12 @@ class CrossRoadsGame {
         if (this._trafficPaths.length < 2) {
             return;
         }
-        var newPathCollision = _checkNewPathCollisions();
+        var newPathCollision = this._checkNewPathCollisions();
         
         if (!newPathCollision) {
             return;
         }
         
-    }
-    
-    _checkTrafficPaths() {
-        if (this._trafficPaths.length < 2) {
-            return;
-        }
-        
-        var collisionRouteIndex = _checkNewPathCollisions();
-        if (collisionRouteIndex) {
-            _checkAllPathCollisions(collisionRouteIndex);
-        }
-        
-        var completePathCounter = 1;
-        while (completePathCounter < this._trafficPaths.length) {
-            this._trafficPaths.forEach(function(item) { if (!item.destinationReached) {
-                                                            item.stepRoute();
-                                                            if (item.destinationReached) { completePathCounter++; }
-                                                        }
-                                                      });
-        }
-        
-        this._dayCount++;
-        if (this._mostSuccessfulPaths < this._trafficPaths.length) {
-            this._mostSuccessfulPaths = this._trafficPaths.length;
-        }
     }
     
     _checkNewPathCollisions() {
@@ -102,7 +76,7 @@ class CrossRoadsGame {
             
             if (newPathX == trafficPathX && newPathY == trafficPathY) {
                 collisionOccured = true;
-                removeTrafficPath(trafficPath);
+                this.removeTrafficPath(trafficPath);
                 
                 collisionNode = this._grid.getNode(newPathX, newPathY);
                 collisionNode.containsAccident = true;
@@ -113,7 +87,7 @@ class CrossRoadsGame {
         }
         
         if (collisionOccured) {
-            removeTrafficPath(this._newTrafficPath);
+            this.removeTrafficPath(this._newTrafficPath);
             return true;
         }
         
@@ -126,12 +100,9 @@ class CrossRoadsGame {
             var trafficPath = this._trafficPaths[trafficPathCounter];
             var collisionDetected = false;
             
-            for (var routeCounter = collisionRouteIndex; routeCounter < trafficPath.route.length || collisionDetected; routeCounter++) {
-                var routeNode = trafficPath.route[routeCounter];
-                if (routeNode.containsAccident) {
-                    collisionDetected = true;
-                    removeTrafficPath(trafficPath);
-                }
+            if (trafficPath.gridPosition.containsAccident) {
+                collisionDetected = true;
+                this.removeTrafficPath(trafficPath);
             }
             
             if (!collisionDetected) {

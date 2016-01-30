@@ -15,15 +15,13 @@ class TrafficGrid {
     
     get map() { return this._map; }
     
-    getNode(x, y) {
-        if (y < 0 || y >= this._map.length) {
-            return null;
+    getNode(rowIndex, columnIndex) {
+        var row = this._map[rowIndex];
+        
+        if (row) {
+            return row[columnIndex];
         }
-        else if (x < 0 || x >= this._map[y].length) {
-            return null;
-        }
-            
-        return this._map[x][y];
+        return undefined;
     }
     
     connectNodes(node1, node2, direction) {
@@ -66,8 +64,34 @@ class TrafficGrid {
         return connectionsCount;
     }
     
-    randomize() {
+    makeRandomMesh() {
         throw "Not Yet Implemented!  Cause I'm fucking tired..."
+    }
+    
+    makeFullMesh() {
+        for (var rowCounter = 0; rowCounter < this._map.length; rowCounter++) {
+            var row = this._map[rowCounter];
+            for (var columnCounter = rowCounter % 2; columnCounter < row.length; columnCounter++) {
+                var sourceNode = row[columnCounter];
+                var northNode = this.getNode(rowCounter - 1, columnCounter);
+                var southNode = this.getNode(rowCounter + 1, columnCounter);
+                var eastNode = this.getNode(rowCounter, columnCounter + 1);
+                var westNode = this.getNode(rowCounter, columnCounter - 1);
+                
+                if (northNode) {
+                    this.connectNodes(sourceNode, northNode, "north");
+                }
+                if (southNode) {
+                    this.connectNodes(sourceNode, southNode, "south");
+                }
+                if (eastNode) {
+                    this.connectNodes(sourceNode, eastNode, "east");
+                }
+                if (westNode) {
+                    this.connectNodes(sourceNode, westNode, "west");
+                }
+            }
+        }
     }
 }
 

@@ -4,7 +4,6 @@ class IntersectionNode {
         this._y = y;
         
         this._containsAccident = false;
-        this._containsCar = false;
         
         this._north = null;
         this._south = null;

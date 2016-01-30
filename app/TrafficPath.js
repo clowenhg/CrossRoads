@@ -8,6 +8,7 @@ class TrafficPath {
     
     get route() { return this._route; }
     get routePosition() { return this._routePosition; }
+    get gridPosition() { return this._route[this._routePosition]; }
     get destinationReached() { return (this._routePosition >= this._route.length); }
     
     addNode(node) {
