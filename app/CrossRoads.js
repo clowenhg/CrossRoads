@@ -10,7 +10,6 @@ class Game {
   constructor() {
     var state = new CrossRoadsGame();
     this.state = state;
-    this.state.startLevel();
     debugger;
   }
 

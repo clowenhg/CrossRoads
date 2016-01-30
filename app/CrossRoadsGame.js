@@ -1,112 +1,112 @@
 var IntersectionNode = require('./IntersectionNode.js');
 var TrafficGrid = require('./TrafficGrid.js');
-var TrafficPath = require('./TrafficPath.js');
+var TrafficPath = require('./TrafficPattern.js');
 
 class CrossRoadsGame {
     constructor() {
         this._grid = null;
-        this._trafficPaths = null;
-        this._newTrafficPath = null;
+        this._trafficPatterns = null;
+        this._newTrafficPattern = null;
         this._dayCount = 0;
-        this._mostSuccessfulPaths = 0;
+        this._mostSuccessfulPatterns = 0;
     }
     
     get grid() { return this._grid; }
-    get trafficPaths() { return this._trafficPaths; }
-    get newTrafficPath() { return this._newTrafficPath; }
+    get trafficPatterns() { return this._trafficPatterns; }
+    get newTrafficPattern() { return this._newTrafficPattern; }
     get dayCount() { return this._dayCount; }
-    get mostSuccessfulPaths() { return this._mostSuccessfulPaths; }
+    get mostSuccessfulPatterns() { return this._mostSuccessfulPatterns; }
     
-    startLevel() {
-        this._grid = new TrafficGrid(10, 10);
+    prepareLevel(height, width) {
+        this._grid = new TrafficGrid(height, width);
         this._grid.makeFullMesh();
         
-        this._trafficPaths = [];
+        this._trafficPatterns = [];
         this._dayCount = 0;
-        this._mostSuccessfulPaths = 0;
+        this._mostSuccessfulPatterns = 0;
     }
     
-    addTrafficPath(node) {
-        this._newTrafficPath = new TrafficPath(node);
-        this._trafficPaths.push(this._newTrafficPath);
+    addTrafficPattern(node) {
+        this._newTrafficPattern = new TrafficPattern(node);
+        this._trafficPatterns.push(this._newTrafficPath);
     }
     
-    removeTrafficPath(trafficPath) {
-        var index = this._trafficPaths.indexOf(trafficPath);
+    removeTrafficPattern(trafficPattern) {
+        var index = this._trafficPatterns.indexOf(trafficPattern);
         
         if (index > -1) {
-            this._trafficPaths.splice(index, 1);
+            this._trafficPatterns.splice(index, 1);
         }
     }
     
     update() {
-        this._updateTrafficPaths();
+        this._updateTrafficPatterns();
     }
     
-    _updateTrafficPaths() {
-        if (this._trafficPaths.length < 1) {
+    _updateTrafficPatterns() {
+        if (this._trafficPatterns.length < 1) {
             return;
         }
-        this._trafficPaths.forEach(function(item) { item.stepRoute(); });
+        this._trafficPatterns.forEach(function(item) { item.stepRoute(); });
         
-        if (this._trafficPaths.length < 2) {
+        if (this._trafficPatterns.length < 2) {
             return;
         }
-        var newPathCollision = this._checkNewPathCollisions();
+        var newPatternCollision = this._checkNewPatternCollisions();
         
-        if (!newPathCollision) {
+        if (!newPatternCollision) {
             return;
         }
-        this._checkAllPathCollisions();
+        this._checkAllPatternCollisions();
     }
     
-    _checkNewPathCollisions() {
+    _checkNewPatternCollisions() {
         var collisionOccured = false;
-        var newPathX;
-        var newPathY;
+        var newPatternX;
+        var newPatternY;
         
-        newPathX = this._newTrafficPath.route[this._newTrafficPath.routePosition].x;
-        newPathY = this._newTrafficPath.route[this._newTrafficPath.routePosition].y;
+        newPatternX = this._newTrafficPattern.route[this._newTrafficPattern.routePosition].x;
+        newPatternY = this._newTrafficPattern.route[this._newTrafficPattern.routePosition].y;
         
-        var trafficPathCounter = 1;
-        while (trafficPathCounter < this._trafficPaths.length) {
-            var trafficPath = this._trafficPaths[trafficPathCounter];
-            var trafficPathX = trafficPath.route[trafficPath.routePosition];
-            var trafficPathY = trafficPath.route[trafficPath.routePosition];
+        var trafficPatternCounter = 1;
+        while (trafficPatternCounter < this._trafficPatterns.length) {
+            var trafficPattern = this._trafficPatterns[trafficPatternCounter];
+            var trafficPatternX = trafficPattern.route[trafficPattern.routePosition];
+            var trafficPatternY = trafficPattern.route[trafficPattern.routePosition];
             
-            if (newPathX == trafficPathX && newPathY == trafficPathY) {
+            if (newPatternX == trafficPatternX && newPatternY == trafficPatternY) {
                 collisionOccured = true;
-                this.removeTrafficPath(trafficPath);
+                this.removeTrafficPattern(trafficPattern);
                 
-                collisionNode = this._grid.getNode(newPathX, newPathY);
+                collisionNode = this._grid.getNode(newPatternX, trafficPatternY);
                 collisionNode.containsAccident = true;
             }
             else {
-                trafficPathCounter++;
+                trafficPatternCounter++;
             }
         }
         
         if (collisionOccured) {
-            this.removeTrafficPath(this._newTrafficPath);
+            this.removeTrafficPattern(this._newTrafficPattern);
             return true;
         }
         
         return false;
     }
     
-    _checkAllPathCollisions() {
-        var trafficPathCounter = 1;
-        while (trafficPathCounter < this._trafficPaths.length) {
-            var trafficPath = this._trafficPaths[trafficPathCounter];
+    _checkAllPatternCollisions() {
+        var trafficPatternCounter = 1;
+        while (trafficPatternCounter < this._trafficPaths.length) {
+            var trafficPattern = this._trafficPaths[trafficPatternCounter];
             var collisionDetected = false;
             
-            if (trafficPath.gridPosition.containsAccident) {
+            if (trafficPattern.gridPosition.containsAccident) {
                 collisionDetected = true;
-                this.removeTrafficPath(trafficPath);
+                this.removeTrafficPattern(trafficPattern);
             }
             
             if (!collisionDetected) {
-                trafficPathCounter++;
+                trafficPatternCounter++;
             }
         }
     }

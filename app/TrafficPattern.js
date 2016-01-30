@@ -1,4 +1,4 @@
-class TrafficPath {
+class TrafficPattern {
     constructor(startNode) {
         this._route = [];
         addNode(startNode);
@@ -28,4 +28,4 @@ class TrafficPath {
     }
 }
 
-module.exports = TrafficPath;
+module.exports = TrafficPattern;
