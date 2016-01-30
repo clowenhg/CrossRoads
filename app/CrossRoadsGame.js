@@ -26,8 +26,8 @@ class CrossRoadsGame {
         this._mostSuccessfulPaths = 0;
     }
     
-    addTrafficPath(x, y) {
-        this._newTrafficPath = new TrafficPath(x, y);
+    addTrafficPath(node) {
+        this._newTrafficPath = new TrafficPath(node);
         this._trafficPaths.push(this._newTrafficPath);
     }
     
@@ -57,7 +57,7 @@ class CrossRoadsGame {
         if (!newPathCollision) {
             return;
         }
-        
+        this._checkAllPathCollisions();
     }
     
     _checkNewPathCollisions() {
@@ -94,7 +94,7 @@ class CrossRoadsGame {
         return false;
     }
     
-    _checkAllPathCollisions(collisionRouteIndex) {
+    _checkAllPathCollisions() {
         var trafficPathCounter = 1;
         while (trafficPathCounter < this._trafficPaths.length) {
             var trafficPath = this._trafficPaths[trafficPathCounter];
