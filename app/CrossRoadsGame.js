@@ -66,24 +66,20 @@ class CrossRoadsGame {
     
     _checkNewPatternCollisions() {
         var collisionOccured = false;
-        var newPatternX;
-        var newPatternY;
+        var newPatternColumnIndex;
+        var newPatternRowIndex;
         
-        newPatternX = this._newTrafficPattern.route[this._newTrafficPattern.routePosition].x;
-        newPatternY = this._newTrafficPattern.route[this._newTrafficPattern.routePosition].y;
+        newPatternNode = this._newTrafficPattern.route[this._newTrafficPattern.routePosition];
         
         var trafficPatternCounter = 1;
         while (trafficPatternCounter < this._trafficPatterns.length) {
             var trafficPattern = this._trafficPatterns[trafficPatternCounter];
-            var trafficPatternX = trafficPattern.route[trafficPattern.routePosition];
-            var trafficPatternY = trafficPattern.route[trafficPattern.routePosition];
             
-            if (newPatternX == trafficPatternX && newPatternY == trafficPatternY) {
+            if (newPatternNode == trafficPattern) {
                 collisionOccured = true;
                 this.removeTrafficPattern(trafficPattern);
                 
-                collisionNode = this._grid.getNode(newPatternX, trafficPatternY);
-                collisionNode.containsAccident = true;
+                newPatternNode.containsAccident = true;
             }
             else {
                 trafficPatternCounter++;

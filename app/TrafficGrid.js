@@ -46,18 +46,18 @@ class TrafficGrid {
     getAvailableConnectionsCount(node) {
         var connectionsCount = 0;
         
-        if (node.y == 0 || node.y == this._map.length) {
+        if (node.rowIndex == 0 || node.rowIndex == this._map.length) {
             connectionsCount++;
         }
-        else if (node.y > 0 && node.y < this._map.length) {
+        else if (node.rowIndex > 0 && node.rowIndex < this._map.length) {
             connectionsCount += 2;
         }
         
-        var row = this._map[node.y];
-        if (node.x == 0 || node.x == row.length) {
+        var row = this._map[node.rowIndex];
+        if (node.columnIndex == 0 || node.columnIndex == row.length) {
             connectionsCount++;
         }
-        else if (node.x > 0 && node.x < row.length) {
+        else if (node.columnIndex > 0 && node.columnIndex < row.length) {
             connectionsCount += 2;
         }
         

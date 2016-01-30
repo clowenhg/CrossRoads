@@ -3,8 +3,11 @@ var Pixi = require('pixi.js'),
   Sprite = Pixi.Sprite;
 
 class IntersectionNode extends Sprite {
-    constructor () {
+    constructor (rowIndex, columnIndex) {
         super();
+        this._rowIndex = rowIndex;
+        this._columnIndex = columnIndex;
+
         this._containsAccident = false;
         
         this._north = null;
@@ -35,6 +38,9 @@ class IntersectionNode extends Sprite {
         return this;
     }
     
+    get rowIndex() { return this._rowIndex; }
+    get columnIndex() { return this._columnIndex; }
+
     get containsAccident() { return this._containsAccident; }
     set containsAccident(value) { this._containsAccident = value; }
     
