@@ -16,8 +16,12 @@ class CrossRoadsGame {
     get newTrafficPattern() { return this._newTrafficPattern; }
     get dayCount() { return this._dayCount; }
     get mostSuccessfulPatterns() { return this._mostSuccessfulPatterns; }
-    
-    prepareLevel(height, width) {
+
+  /**
+   * @param {Number} height
+   * @param {Number} width
+   */
+  prepareLevel(height, width) {
         this._grid = new TrafficGrid(height, width);
         this._grid.makeFullMesh();
         

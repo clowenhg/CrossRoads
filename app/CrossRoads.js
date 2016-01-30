@@ -8,65 +8,58 @@ var TrafficGrid = require('./TrafficGrid.js');
 
 class Game {
   constructor() {
-    var state = new CrossRoadsGame();
-    this.state = state;
-    debugger;
+    this.lastTime = 0;
+    this.time = 0;
+
+    this.state = new CrossRoadsGame();
   }
 
   load(){
-    loader.add('roads', 'assets/roads/roads.json', this._setupTile.bind(this))
+    loader.add('roads', 'assets/roads/roads.json')
       .on('error', console.log)
-      .load(this._setupStage.bind(this));
+      .load(this._setup.bind(this));
   }
 
   gameLoop(time){
     window.requestAnimationFrame(this.gameLoop.bind(this));
-    console.log('render[' + time + ']');
+    //console.log('render[' + time + ']');
 
-    this.tiles.nsew.x += 1;
-    this.tiles.nsew.y += 1;
+    if(time - this.lastTime > (1/60) * 1000){
+      //Call update
+    }
 
     this.renderer.render(this.stage);
   }
 
-  _setupStage() {
-    //Create the renderer
-    this.renderer = PIXI.autoDetectRenderer(512, 512);
+  _setup() {
+    this.state.prepareLevel(5, 10);
 
-    //Add the canvas to the HTML document
-    document.body.appendChild(this.renderer.view);
+    //Create the renderer
+    this.renderer = Pixi.autoDetectRenderer(640, 320);
+    var stage = this.stage = new Pixi.Container();
+
+    var map = this.state.grid.map;
+    var x = 0, y = 0;
+
+    map.forEach(function(row){
+      x = 0;
+      row.forEach(function(node){
+        node.x = x * 64;
+        node.y = y * 64;
+        stage.addChild(node);
+        x++;
+      });
+      y++;
+    });
 
     debugger;
-    this.stage = new PIXI.Container();
-    this.stage.addChild(this.tiles.nsew);
+    //Add the canvas to the HTML document
+    document.body.appendChild(this.renderer.view);
 
     this.renderer.render(this.stage);
     window.requestAnimationFrame(this.gameLoop.bind(this));
   }
 
-  _setupTile() {
-    var resource = loader.resources.roads;
-
-    this.tiles = {};
-
-    this.tiles.nsew = new Sprite(resource.textures['road_nsew.png']);
-    //T's
-    this.tiles.nse = new Sprite(resource.textures['road_nse.png']);
-    this.tiles.nsw = new Sprite(resource.textures['road_nsw.png']);
-    this.tiles.new = new Sprite(resource.textures['road_new.png']);
-    this.tiles.sew = new Sprite(resource.textures['road_sew.png']);
-    //Turns
-    this.tiles.ne = new Sprite(resource.textures['road_ne.png']);
-    this.tiles.nw = new Sprite(resource.textures['road_nw.png']);
-    this.tiles.se = new Sprite(resource.textures['road_se.png']);
-    this.tiles.sw = new Sprite(resource.textures['road_sw.png']);
-    //Straights
-    this.tiles.ns = new Sprite(resource.textures['road_ns.png']);
-    this.tiles.ew = new Sprite(resource.textures['road_ew.png']);
-
-    this.tiles.nsew.x = 0;
-    this.tiles.nsew.y = 0;
-  }
 }
 
 module.exports = Game;
