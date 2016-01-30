@@ -1,4 +1,4 @@
-class GridNode {
+class IntersectionNode {
 	constructor (x, y) {
 		this._x = x;
 		this._y = y;

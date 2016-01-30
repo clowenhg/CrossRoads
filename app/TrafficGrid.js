@@ -1,11 +1,11 @@
-class CrossRoadsGrid {
+class TrafficGrid {
 	constructor(height, width) {
 		this._map = [];
 		
 		for (int rowCounter = 0; rowCounter < height; rowCounter++) {
 			var row = [];
 			for (int columnCounter = 0; columnCounter < width; columnCounter++) {
-				row.push(new GridNode(columnCounter, rowCounter));
+				row.push(new IntersectionNode(columnCounter, rowCounter));
 			}
 			this._map.push(row);
 		}
