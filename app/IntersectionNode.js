@@ -16,7 +16,10 @@ class IntersectionNode {
 	get y() { return this._y; }
 	
 	get containsAccident() { return this._containsAccident; }
+	set containsAccident(value) { this._containsAccident = value; }
+	
 	get containsCar() { return this._containsCar; }
+	set containsCar(value) { this._containsCar = value; }
 	
 	get north() { return this._north; }
 	set north(value) { this._north = value; }
