@@ -2,9 +2,9 @@ class TrafficGrid {
     constructor(height, width) {
         this._map = [];
         
-        for (int rowCounter = 0; rowCounter < height; rowCounter++) {
+        for (var rowCounter = 0; rowCounter < height; rowCounter++) {
             var row = [];
-            for (int columnCounter = 0; columnCounter < width; columnCounter++) {
+            for (var columnCounter = 0; columnCounter < width; columnCounter++) {
                 row.push(new IntersectionNode(columnCounter, rowCounter));
             }
             this._map.push(row);

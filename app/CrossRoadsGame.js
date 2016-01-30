@@ -11,6 +11,8 @@ class CrossRoadsGame {
     get trafficPaths { return this._trafficPaths; }
     get newTrafficPath { return this._newTrafficPath; }
     get dayCount { return this._dayCount; }
+    get mostSuccessfulPaths { return this._mostSuccessfulPaths; }
+    get allTrafficPathsComplete { return }
     
     startLevel() {
         this._grid = new TrafficGrid(100, 100);
@@ -34,14 +36,35 @@ class CrossRoadsGame {
         }
     }
     
-    runDay() {
+    update() {
+        _updateTrafficPaths();
+    }
+    
+    _updateTrafficPaths() {
+        if (this._trafficPaths.length < 1) {
+            return;
+        }
+        this._trafficPaths.forEach(function(item) { item.stepRoute(); }
+        
         if (this._trafficPaths.length < 2) {
-            return true;
+            return;
+        }
+        var newPathCollision = _checkNewPathCollisions();
+        
+        if (!newPathCollision) {
+            return;
         }
         
-        var collisionData = checkNewPathCollisions()
-        if (collisionData) {
-            checkAllPathCollisions(collisionData);
+    }
+    
+    _checkTrafficPaths() {
+        if (this._trafficPaths.length < 2) {
+            return;
+        }
+        
+        var collisionRouteIndex = _checkNewPathCollisions();
+        if (collisionRouteIndex) {
+            _checkAllPathCollisions(collisionRouteIndex);
         }
         
         var completePathCounter = 1;
@@ -59,51 +82,47 @@ class CrossRoadsGame {
         }
     }
     
-    checkNewPathCollisions() {
+    _checkNewPathCollisions() {
         var collisionOccured = false;
         var newPathX;
         var newPathY;
         
-        while (!this._newTrafficPath.destinationReached && !collisionOccured) {
-            newPathX = this._newTrafficPath.route[this._newTrafficPath.routePosition].x;
-            newPathY = this._newTrafficPath.route[this._newTrafficPath.routePosition].y;
+        newPathX = this._newTrafficPath.route[this._newTrafficPath.routePosition].x;
+        newPathY = this._newTrafficPath.route[this._newTrafficPath.routePosition].y;
+        
+        var trafficPathCounter = 1;
+        while (trafficPathCounter < this._trafficPaths.length) {
+            var trafficPath = this._trafficPaths[trafficPathCounter];
+            var trafficPathX = trafficPath.route[trafficPath.routePosition];
+            var trafficPathY = trafficPath.route[trafficPath.routePosition];
             
-            var trafficPathCounter = 1;
-            while (trafficPathCounter < this._trafficPaths.length && !collisionOccured) {
-                var trafficPath = this._trafficPaths[trafficPathCounter];
-                var trafficPathX = trafficPath.route[trafficPath.routePosition];
-                var trafficPathY = trafficPath.route[trafficPath.routePosition];
+            if (newPathX == trafficPathX && newPathY == trafficPathY) {
+                collisionOccured = true;
+                removeTrafficPath(trafficPath);
                 
-                if (newPathX == trafficPathX && newPathY == trafficPathY) {
-                    collisionOccured = true;
-                    removeTrafficPath(trafficPath);
-                    removeTrafficPath(this._newTrafficPath);
-                    
-                    collisionNode = this._grid.getNode(newPathX, newPathY);
-                    collisionNode.containsAccident = true;
-                }
-                else {
-                    trafficPathCounter++;
-                }
+                collisionNode = this._grid.getNode(newPathX, newPathY);
+                collisionNode.containsAccident = true;
             }
-            
-            this._trafficPaths.forEach(function(item) { item.stepRoute(); });
+            else {
+                trafficPathCounter++;
+            }
         }
         
         if (collisionOccured) {
-            return { x = newPathX, y = newPathY, routeIndex = trafficPathCounter };
+            removeTrafficPath(this._newTrafficPath);
+            return true;
         }
         
-        return null;
+        return false;
     }
     
-    checkAllPathCollisions(collisionData) {
+    _checkAllPathCollisions(collisionRouteIndex) {
         var trafficPathCounter = 1;
         while (trafficPathCounter < this._trafficPaths.length) {
             var trafficPath = this._trafficPaths[trafficPathCounter];
             var collisionDetected = false;
             
-            for (var routeCounter = collisionData.routeIndex; routeCounter < trafficPath.route.length || collisionDetected; routeCounter++) {
+            for (var routeCounter = collisionRouteIndex; routeCounter < trafficPath.route.length || collisionDetected; routeCounter++) {
                 var routeNode = trafficPath.route[routeCounter];
                 if (routeNode.containsAccident) {
                     collisionDetected = true;
@@ -116,5 +135,4 @@ class CrossRoadsGame {
             }
         }
     }
-}
 }
