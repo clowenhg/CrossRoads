@@ -1,3 +1,7 @@
+var IntersectionNode = require('./IntersectionNode.js');
+var TrafficGrid = require('./TrafficGrid.js');
+var TrafficPath = require('./TrafficPath.js');
+
 class CrossRoadsGame {
     constructor() {
         this._grid = null;
@@ -44,7 +48,7 @@ class CrossRoadsGame {
         if (this._trafficPaths.length < 1) {
             return;
         }
-        this._trafficPaths.forEach(function(item) { item.stepRoute(); }
+        this._trafficPaths.forEach(function(item) { item.stepRoute(); });
         
         if (this._trafficPaths.length < 2) {
             return;
@@ -136,3 +140,5 @@ class CrossRoadsGame {
         }
     }
 }
+
+module.exports = CrossRoadsGame;

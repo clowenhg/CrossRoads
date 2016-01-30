@@ -1,3 +1,4 @@
+var CrossRoadsGame = require('./CrossRoadsGame.js');
 var Pixi = require('pixi.js');
 var RoadTile = require('./RoadTile.js');
 var Sprite = Pixi.Sprite;
@@ -5,6 +6,9 @@ var loader = Pixi.loader;
 
 class Game {
   constructor() {
+    var state = new CrossRoadsGame();
+    this.state = state;
+    debugger;
   }
 
   load(){
