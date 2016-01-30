@@ -30,3 +30,5 @@ class IntersectionNode {
     get west() { return this._west; }
     set west(value) { this._west = value; }
 }
+
+module.exports = IntersectionNode;

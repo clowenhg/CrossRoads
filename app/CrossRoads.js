@@ -4,6 +4,8 @@ var RoadTile = require('./RoadTile.js');
 var Sprite = Pixi.Sprite;
 var loader = Pixi.loader;
 
+var TrafficGrid = require('./TrafficGrid.js');
+
 class Game {
   constructor() {
     var state = new CrossRoadsGame();

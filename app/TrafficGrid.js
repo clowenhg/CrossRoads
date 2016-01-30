@@ -1,3 +1,5 @@
+var IntersectionNode = require('./IntersectionNode.js');
+
 class TrafficGrid {
     constructor(height, width) {
         this._map = [];
@@ -68,3 +70,5 @@ class TrafficGrid {
         throw "Not Yet Implemented!  Cause I'm fucking tired..."
     }
 }
+
+module.exports = TrafficGrid;

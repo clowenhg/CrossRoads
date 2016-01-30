@@ -16,7 +16,7 @@ class CrossRoadsGame {
     get newTrafficPath() { return this._newTrafficPath; }
     get dayCount() { return this._dayCount; }
     get mostSuccessfulPaths() { return this._mostSuccessfulPaths; }
-    get allTrafficPathsComplete() { return }
+    //get allTrafficPathsComplete() { return }
     
     startLevel() {
         this._grid = new TrafficGrid(100, 100);

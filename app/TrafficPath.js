@@ -26,3 +26,5 @@ class TrafficPath {
         }
     }
 }
+
+module.exports = TrafficPath;
