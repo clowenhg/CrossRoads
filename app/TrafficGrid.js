@@ -11,7 +11,7 @@ class TrafficGrid {
 		}
 	}
 	
-	get map { return this._map; }
+	get map() { return this._map; }
 	
 	connectNodes(node1, node2, direction) {
 		if (direction == "north") {

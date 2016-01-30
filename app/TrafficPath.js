@@ -6,9 +6,9 @@ class TrafficPath {
 		this._routePosition = 0;
 	}
 	
-	get route { return this._route; }
-	get routePosition { return this._routePosition; }
-	get destinationReached { return (this._routePosition == this._route.length); }
+	get route() { return this._route; }
+	get routePosition() { return this._routePosition; }
+	get destinationReached() { return (this._routePosition == this._route.length); }
 	
 	addNode(node) {
 		this._route.push([node.x, node.y]);
