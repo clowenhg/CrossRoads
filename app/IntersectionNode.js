@@ -1,7 +1,7 @@
 class IntersectionNode {
-    constructor (x, y) {
-        this._x = x;
-        this._y = y;
+    constructor (rowIndex, columnIndex) {
+        this._rowIndex = rowIndex;
+        this._columnIndex = columnIndex;
         
         this._containsAccident = false;
         
@@ -11,8 +11,8 @@ class IntersectionNode {
         this._west = null;
     }
     
-    get x() { return this._x; }
-    get y() { return this._y; }
+    get rowIndex() { return this._rowIndex; }
+    get columnIndex() { return this._columnIndex; }
     
     get containsAccident() { return this._containsAccident; }
     set containsAccident(value) { this._containsAccident = value; }
