@@ -44,6 +44,8 @@ class Game {
       this.renderer.render(this.paddingStage);
       this.updateUi();
     }
+
+    this.tutorial.update(time);
   }
 
   _setup() {

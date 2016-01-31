@@ -94,7 +94,7 @@ class CrossRoadsGame {
 
     this._stepTime = Math.max(this._stepTime - this._dayCount * 5, 200);
 
-    this._skipUpdates = 1;
+    this._skipUpdates = 4;
   }
 
   startInputState() {
