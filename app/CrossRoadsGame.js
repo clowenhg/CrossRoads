@@ -98,14 +98,14 @@ class CrossRoadsGame {
     var x = 0;
     var y = 0;
 
-    while (!startNode) {
+    while (!startNode || !startNode.hasExit()) {
       x = Math.floor(Math.random() * this._grid.width);
       y = Math.floor(Math.random() * this._grid.height);
 
       startNode = this._grid.getNode(y, x);
     }
 
-    while (!this._destinationNode || this._destinationNode === startNode) {
+    while (!this._destinationNode || this._destinationNode === startNode || !this._destinationNode.hasExit() || startNode.isConnected(this._destinationNode)) {
       x = Math.floor(Math.random() * this._grid.width);
       y = Math.floor(Math.random() * this._grid.height);
 

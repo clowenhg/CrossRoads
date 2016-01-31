@@ -89,7 +89,7 @@ class IntersectionNode extends Sprite {
         this._setTexture();
     }
 
-    hasExit(){
+    hasExit() {
         return(this._north || this._south || this._east || this._west);
     }
     
