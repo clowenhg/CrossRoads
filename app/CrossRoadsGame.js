@@ -48,7 +48,7 @@ class CrossRoadsGame {
    * @param {Number} columns
    */
   prepareLevel(rows, columns) {
-    this._grid = new TrafficGrid(rows, columns, this._nodeClick.bind(this));
+    this._grid = new TrafficGrid(rows, columns, this._nodeClick.bind(this), this._seed);
     this._grid.makeRandomMesh();
 
     this._trafficPatterns = [];

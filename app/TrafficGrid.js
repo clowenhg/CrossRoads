@@ -117,10 +117,6 @@ class TrafficGrid {
             
             if (makeConnection > self._randomConnectionThreshold) {
                 var otherNode = self.getNodeByDirection(node, item);
-                
-                if (!otherNode){
-                    debugger;
-                }
                 self.connectNodes(node, otherNode, item);
             }
         });

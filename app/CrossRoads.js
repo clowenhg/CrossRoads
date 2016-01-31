@@ -14,7 +14,6 @@ class Game {
     config.columns = config.columns || 4;
     config.rows = config.rows || 4;
 
-    debugger;
     config.random = !!config.random || true;
     config.seed = config.seed || this._getRandomSeed();
 
