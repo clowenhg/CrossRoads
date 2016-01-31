@@ -1,11 +1,48 @@
 <html>
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </head>
 <body>
 <script src="build/client.js"></script>
+<div class="row">
+    <h1 class="text-center">
+        Cross Roads
+    </h1>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-2">
+            <div class="form-control">
+                <label for="seed">Seed: </label>
+                <input type="text" name="seed" id="seed">
+            </div>
+            <div class="form-control">
+                <button id="play">Play</button>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="game">
+
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-    var game = new CrossRoads({rows: 15, columns: 30});
-    game.load();
+    $('.play').on('click', function(){
+        var parent = $(".game");
+        var seed = $('#seed').value();
+
+        var game = new CrossRoads({
+            rows: 8,
+            columns: 8,
+            parent: parent,
+            seed: seed
+        });
+
+        game.load();
+    });
 </script>
 </body>
 </html>

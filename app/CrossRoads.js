@@ -21,32 +21,50 @@ class Game {
     this.config = config;
   }
 
-  load(){
+  load() {
     loader.add('roads', 'assets/roads/roads.json')
       .on('error', console.log)
       .load(this._setup.bind(this));
   }
 
-  gameLoop(time){
+  gameLoop(time) {
     window.requestAnimationFrame(this.gameLoop.bind(this));
     this.state.update(time);
-    this.renderer.render(this.stage);
+    this.renderer.render(this.paddingStage);
   }
 
   _setup() {
     //Create the renderer
-    this.renderer = Pixi.autoDetectRenderer(this.config.columns * tileWidth, this.config.rows * tileWidth);
+    var fullWidth = this.config.columns * tileWidth + 16;
+    var fullHeight = this.config.rows * tileWidth + 16;
+    this.renderer = Pixi.autoDetectRenderer(this.config.columns * tileWidth + 16, this.config.rows * tileWidth + 16, null, true);
 
-    if(!this.config.parent){
+    if (!this.config.parent) {
       //Add the canvas to the HTML document
       document.body.appendChild(this.renderer.view);
     }
-    else{
+    else {
       parent.append(this.renderer.view);
     }
 
+    var paddingStage = new Pixi.Container();
+    var surround = new Pixi.Graphics();
+    surround.x = 0;
+    surround.y = 0;
+    surround.lineStyle(8, 0x644100);
+    surround.beginFill(0x008800);
+    surround.drawRoundedRect(0, 0, fullWidth, fullHeight, 8);
+    surround.endFill();
+
+    paddingStage.addChild(surround);
+
+    this.paddingStage = paddingStage;
     var stage = this.stage = new Pixi.Container();
+    stage.x = 8;
+    stage.y = 8;
     var mapStage = this.mapStage = new Pixi.Container();
+
+    this.paddingStage.addChild(stage);
 
     var patternStage = new Pixi.Container();
     this.state = new CrossRoadsGame(patternStage);
@@ -58,9 +76,9 @@ class Game {
     var map = this.state.grid.map;
     var x = 0, y = 0;
 
-    map.forEach(function(row){
+    map.forEach(function (row) {
       x = 0;
-      row.forEach(function(node){
+      row.forEach(function (node) {
         node.x = x * 64;
         node.y = y * 64;
         mapStage.addChild(node);
@@ -69,7 +87,7 @@ class Game {
       y++;
     });
 
-    this.renderer.render(this.stage);
+    this.renderer.render(this.paddingStage);
     this.state.startInputState();
     window.requestAnimationFrame(this.gameLoop.bind(this));
   }
