@@ -46,6 +46,6 @@
       .pipe(uglify())
       .on('error', gutil.log)
       .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('./build/'));
+      .pipe(gulp.dest('./web/build/'));
   });
 })();

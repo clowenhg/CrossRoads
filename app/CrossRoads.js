@@ -5,10 +5,20 @@ var loader = Pixi.loader;
 
 var TrafficGrid = require('./TrafficGrid.js');
 
+var tileWidth = 64;
+
 class Game {
-  constructor() {
+  constructor(config) {
+    config = config || {};
+    config.columns = config.columns || 4;
+    config.rows = config.rows || 4;
+
+    config.random = !!config.random || true;
+
     this.lastTime = 0;
     this.time = 0;
+
+    this.config = config;
   }
 
   load(){
@@ -25,13 +35,22 @@ class Game {
 
   _setup() {
     //Create the renderer
-    this.renderer = Pixi.autoDetectRenderer(256, 256);
+    this.renderer = Pixi.autoDetectRenderer(this.config.columns * tileWidth, this.config.rows * tileWidth);
+
+    if(!this.config.parent){
+      //Add the canvas to the HTML document
+      document.body.appendChild(this.renderer.view);
+    }
+    else{
+      parent.append(this.renderer.view);
+    }
+
     var stage = this.stage = new Pixi.Container();
     var mapStage = this.mapStage = new Pixi.Container();
 
     var patternStage = new Pixi.Container();
     this.state = new CrossRoadsGame(patternStage);
-    this.state.prepareLevel(4, 4);
+    this.state.prepareLevel(this.config.rows, this.config.columns);
 
     this.stage.addChild(this.mapStage);
     this.stage.addChild(patternStage);
@@ -50,10 +69,8 @@ class Game {
       y++;
     });
 
-    //Add the canvas to the HTML document
-    document.body.appendChild(this.renderer.view);
-
     this.renderer.render(this.stage);
+    this.state.startInputState();
     window.requestAnimationFrame(this.gameLoop.bind(this));
   }
 

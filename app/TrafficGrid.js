@@ -1,14 +1,14 @@
 var IntersectionNode = require('./IntersectionNode.js');
 
 class TrafficGrid {
-    constructor(height, width, onClick) {
-        this._height = height;
-        this._width = width;
+    constructor(rows, columns, onClick) {
+        this._height = rows;
+        this._width = columns;
         this._map = [];
         
-        for (var rowCounter = 0; rowCounter < height; rowCounter++) {
+        for (var rowCounter = 0; rowCounter < rows; rowCounter++) {
             var row = [];
-            for (var columnCounter = 0; columnCounter < width; columnCounter++) {
+            for (var columnCounter = 0; columnCounter < columns; columnCounter++) {
                 row.push(new IntersectionNode(rowCounter, columnCounter, onClick));
             }
             this._map.push(row);
@@ -20,7 +20,7 @@ class TrafficGrid {
     get width() { return this._width; }
 
     getNode(rowIndex, columnIndex) {
-        if(rowIndex >= this.width || columnIndex >= this.height){
+        if(rowIndex >= this.height || columnIndex >= this.width){
             return null;
         }
 

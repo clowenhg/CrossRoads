@@ -42,18 +42,16 @@ class CrossRoadsGame {
   }
 
   /**
-   * @param {Number} height
-   * @param {Number} width
+   * @param {Number} rows
+   * @param {Number} columns
    */
-  prepareLevel(height, width) {
-    this._grid = new TrafficGrid(height, width, this._nodeClick.bind(this));
+  prepareLevel(rows, columns) {
+    this._grid = new TrafficGrid(rows, columns, this._nodeClick.bind(this));
     this._grid.makeFullMesh();
 
     this._trafficPatterns = [];
     this._dayCount = 0;
     this._mostSuccessfulPatterns = 0;
-
-    this.startInputState();
   }
 
   removeTrafficPattern(trafficPattern) {
@@ -200,6 +198,8 @@ class CrossRoadsGame {
   }
 
   _nodeClick(node) {
+    console.log(node._rowIndex);
+    console.log(node._columnIndex);
     if (!this._evaluateTrafficPatterns) {
       if (this.newTrafficPattern.last.hasExit(node)) {
         this.newTrafficPattern.addNode(node);

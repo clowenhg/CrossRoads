@@ -50,11 +50,11 @@ class TrafficPattern extends Container {
             return;
         };
         if(this.next){
-            var x = ((this.gridPosition.rowIndex * 64 + 32) - (this.next.rowIndex * 64 + 32)) * step;
-            var y = ((this.gridPosition.columnIndex * 64 + 32) - (this.next.columnIndex * 64 + 32)) * step;
+            var y = ((this.gridPosition.rowIndex * 64 + 32) - (this.next.rowIndex * 64 + 32)) * step;
+            var x = ((this.gridPosition.columnIndex * 64 + 32) - (this.next.columnIndex * 64 + 32)) * step;
 
-            x += this.gridPosition.rowIndex * 64 + 32;
-            y += this.gridPosition.columnIndex * 64 + 32;
+            y += this.gridPosition.rowIndex * 64 + 32;
+            x += this.gridPosition.columnIndex * 64 + 32;
 
             this._stepGfx.x = x;
             this._stepGfx.y = y;
@@ -65,8 +65,8 @@ class TrafficPattern extends Container {
         var gfx = new Graphics();
         color = color || 0x0088FF;
 
-        var x = node.rowIndex * 64;
-        var y = node.columnIndex * 64;
+        var y = node.rowIndex * 64;
+        var x = node.columnIndex * 64;
 
         var sx = 0;
         var sy = 0;
@@ -87,7 +87,7 @@ class TrafficPattern extends Container {
             else if(node.east === nodeTo){
                 dx = 64;
                 dy = 8;
-                sy = -4
+                sy = -4;
             }
             else if(node.west === nodeTo){
                 dx = -64;
@@ -138,8 +138,8 @@ class TrafficPattern extends Container {
     stepRoute() {
         if (!this.destinationReached && !this.collided) {
             this._routePosition++;
-            this._stepGfx.x = this.gridPosition.rowIndex * 64 + 32;
-            this._stepGfx.y = this.gridPosition.columnIndex * 64 + 32;
+            this._stepGfx.y = this.gridPosition.rowIndex * 64 + 32;
+            this._stepGfx.x = this.gridPosition.columnIndex * 64 + 32;
 
             if(this.destinationReached){
                 this._setStepGraphics(0x00AA00, 6);
