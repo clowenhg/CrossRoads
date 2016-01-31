@@ -1,11 +1,15 @@
 var IntersectionNode = require('./IntersectionNode.js');
 
 class TrafficGrid {
-    constructor(rows, columns, onClick) {
-        this._randomConnectionThreshold = 0.5;
+    constructor(rows, columns, onClick, seed) {
+        this._randomConnectionThreshold = 0.47;
         this._height = rows;
         this._width = columns;
         this._map = [];
+        
+        this._seedRandom = require('seedrandom');
+        this._seed = seed;
+        this._random = this._seedRandom(this._seed);
         
         for (var rowCounter = 0; rowCounter < rows; rowCounter++) {
             var row = [];
@@ -19,6 +23,7 @@ class TrafficGrid {
     get map() { return this._map; }
     get height() { return this._height; }
     get width() { return this._width; }
+    get seed() { return this._seed; }
 
     getNode(rowIndex, columnIndex) {
         if(rowIndex >= this.height || columnIndex >= this.width){
@@ -108,7 +113,7 @@ class TrafficGrid {
         
         var self = this;
         availableConnections.forEach(function(item) {
-            var makeConnection = Math.random();
+            var makeConnection = self._random(self._seed);
             
             if (makeConnection > self._randomConnectionThreshold) {
                 var otherNode = self.getNodeByDirection(node, item);

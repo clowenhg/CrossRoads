@@ -3,7 +3,7 @@ var TrafficGrid = require('./TrafficGrid.js');
 var TrafficPattern = require('./TrafficPattern.js');
 
 class CrossRoadsGame {
-  constructor(patternStage) {
+  constructor(patternStage, seed) {
     this._grid = null;
     this._trafficPatterns = null;
     this._newTrafficPattern = null;
@@ -11,10 +11,10 @@ class CrossRoadsGame {
     this._mostSuccessfulPatterns = 0;
     this._evaluateTrafficPatterns = false;
     this.lastTime = 0;
-
     this._stepTime = 400;
 
     this.patternStage = patternStage;
+    this._seed = seed;
   }
 
   get grid() {
@@ -40,6 +40,8 @@ class CrossRoadsGame {
   get evaluateTrafficPatterns() {
     return this._evaluateTrafficPatterns;
   }
+  
+  get seed() { return this._seed; }
 
   /**
    * @param {Number} rows
