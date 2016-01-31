@@ -201,7 +201,7 @@ class CrossRoadsGame {
 
   _nodeClick(node) {
     if (!this._evaluateTrafficPatterns) {
-      if (this.newTrafficPattern.last.hasExit(node)) {
+      if (this.newTrafficPattern.last.isConnected(node)) {
         this.newTrafficPattern.addNode(node);
         if (node === this._destinationNode) {
           this.startEvaluationState();
