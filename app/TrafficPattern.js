@@ -42,13 +42,14 @@ class TrafficPattern extends Container {
     clean(){
         this.removeChildren();
         this._route.splice(0, this._route.length);
+        this._stepGfx.clear();
         this._stepGfx = null;
     }
 
     drawUpdate(step){
         if(this.collided || this.destinationReached){
             return;
-        };
+        }
         if(this.next){
             var y = ((this.gridPosition.rowIndex * 64 + 32) - (this.next.rowIndex * 64 + 32)) * step;
             var x = ((this.gridPosition.columnIndex * 64 + 32) - (this.next.columnIndex * 64 + 32)) * step;
@@ -122,8 +123,8 @@ class TrafficPattern extends Container {
         this._routePosition = 0;
         this._routing = true;
 
-        this._stepGfx.x = this.gridPosition.rowIndex * 64 + 32;
-        this._stepGfx.y = this.gridPosition.columnIndex * 64 + 32;
+        this._stepGfx.y = this.gridPosition.rowIndex * 64 + 32;
+        this._stepGfx.x = this.gridPosition.columnIndex * 64 + 32;
 
         this._setStepGraphics(0xFFFF00, 8);
 

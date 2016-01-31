@@ -144,7 +144,7 @@ class CrossRoadsGame {
         compare = this._trafficPatterns[compareIter];
 
         console.log('compare');
-        if (!(subject.destinationReached || subject.destinationReached)) {
+        if (!(subject.destinationReached || compare.destinationReached)) {
           if (subject.gridPosition.rowIndex === compare.gridPosition.rowIndex
             && subject.gridPosition.columnIndex === compare.gridPosition.columnIndex) {
             subject.collided = true;
