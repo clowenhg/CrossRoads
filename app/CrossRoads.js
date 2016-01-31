@@ -14,6 +14,7 @@ class Game {
     config.rows = config.rows || 4;
 
     config.random = !!config.random || true;
+    config.seed = !!config.seed || this._getRandomSeed();
 
     this.lastTime = 0;
     this.time = 0;
@@ -67,7 +68,7 @@ class Game {
     this.paddingStage.addChild(stage);
 
     var patternStage = new Pixi.Container();
-    this.state = new CrossRoadsGame(patternStage);
+    this.state = new CrossRoadsGame(patternStage, this.config.seed);
     this.state.prepareLevel(this.config.rows, this.config.columns);
 
     this.stage.addChild(this.mapStage);
@@ -91,7 +92,13 @@ class Game {
     this.state.startInputState();
     window.requestAnimationFrame(this.gameLoop.bind(this));
   }
-
+  
+  _getRandomSeed() {
+      var min = 0;
+      var max = 10000;
+      
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 }
 
 module.exports = Game;

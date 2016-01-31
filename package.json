@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/clowenhg/CrossRoads#readme",
   "dependencies": {
-    "pixi.js": "^3.0.9"
+    "pixi.js": "^3.0.9",
+    "seedrandom": "^2.4.2"
   },
   "devDependencies": {
     "babel-loader": "^6.2.1",
