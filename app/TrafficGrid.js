@@ -2,6 +2,7 @@ var IntersectionNode = require('./IntersectionNode.js');
 
 class TrafficGrid {
     constructor(rows, columns, onClick) {
+        this._randomConnectionThreshold = 0.3;
         this._height = rows;
         this._width = columns;
         this._map = [];
@@ -33,6 +34,21 @@ class TrafficGrid {
         return undefined;
     }
     
+    getNodeByDirection(node, direction) {
+        if (direction == "north") {
+            return this.getNode(node.rowIndex - 1, node.columnIndex);
+        }
+        else if (direction == "south") {
+            return this.getNode(node.rowIndex + 1, node.columnIndex);
+        }
+        else if (direction == "east") {
+            return this.getNode(node.rowIndex, node.columnIndex + 1);
+        }
+        else if (direction == "west") {
+            return this.getNode(node.rowIndex, node.columnIndex - 1);
+        }
+    }
+    
     connectNodes(node1, node2, direction) {
         if (direction == "north") {
             node1.north = node2;
@@ -58,7 +74,7 @@ class TrafficGrid {
         if (node.rowIndex > 0){
             validConnection.push("north");
         }
-        if (node.rowIndex < this._map.length) {
+        if (node.rowIndex < this._map.length - 1) {
             validConnection.push("south");
         }
         
@@ -66,7 +82,7 @@ class TrafficGrid {
         if (node.columnIndex > 0) {
             validConnection.push("west");
         }
-        if (node.columnIndex < row.length) {
+        if (node.columnIndex < row.length - 1) {
             validConnection.push("east");
         }
         
@@ -88,7 +104,21 @@ class TrafficGrid {
     }
     
     _randomizeConnections(node) {
-        throw "Not Yet Implemented!  Cause I'm fucking tired..."
+        var availableConnections = this.getValidConnections(node);
+        
+        var self = this;
+        availableConnections.forEach(function(item) {
+            var makeConnection = Math.random();
+            
+            if (makeConnection > self._randomConnectionThreshold) {
+                var otherNode = self.getNodeByDirection(node, item);
+                
+                if (!otherNode){
+                    debugger;
+                }
+                self.connectNodes(node, otherNode, item);
+            }
+        });
     }
     
     _setAllConnections(node) {
