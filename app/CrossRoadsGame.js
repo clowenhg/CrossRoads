@@ -9,6 +9,7 @@ class CrossRoadsGame {
         this._newTrafficPattern = null;
         this._dayCount = 0;
         this._mostSuccessfulPatterns = 0;
+        this._evaluateTrafficPatterns = false;
     }
     
     get grid() { return this._grid; }
@@ -16,6 +17,9 @@ class CrossRoadsGame {
     get newTrafficPattern() { return this._newTrafficPattern; }
     get dayCount() { return this._dayCount; }
     get mostSuccessfulPatterns() { return this._mostSuccessfulPatterns; }
+    
+    get evaluateTrafficPatterns() { return this._evaluateTrafficPatterns; }
+    set evaluateTrafficPatterns(value) { this._evaluateTrafficPatterns = value; }
 
   /**
    * @param {Number} height
@@ -44,7 +48,9 @@ class CrossRoadsGame {
     }
     
     update() {
-        this._updateTrafficPatterns();
+        if (this._evaluateTrafficPatterns){
+            this._updateTrafficPatterns();
+        }
     }
     
     _updateTrafficPatterns() {
