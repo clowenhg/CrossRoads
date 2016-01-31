@@ -44,6 +44,8 @@ class IntersectionNode extends Sprite {
             this._setTexture();
         });
 
+        this._setTexture();
+
         return this;
     }
     
@@ -90,7 +92,11 @@ class IntersectionNode extends Sprite {
 
         this._exitString += !!this._mousedown?'_clicked':'';
 
-        this.texture = Pixi.loader.resources.roads.textures['road_' + this._exitString + '.png'];
+        if(this.exitString !== ''){
+            this._exitString = '_' + this._exitString;
+        }
+
+        this.texture = Pixi.loader.resources.roads.textures['road' + this._exitString + '.png'];
     }
 }
 

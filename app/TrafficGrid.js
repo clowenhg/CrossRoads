@@ -2,7 +2,7 @@ var IntersectionNode = require('./IntersectionNode.js');
 
 class TrafficGrid {
     constructor(rows, columns, onClick) {
-        this._randomConnectionThreshold = 0.3;
+        this._randomConnectionThreshold = 0.5;
         this._height = rows;
         this._width = columns;
         this._map = [];
