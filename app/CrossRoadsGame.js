@@ -144,7 +144,7 @@ class CrossRoadsGame {
         compare = this._trafficPatterns[compareIter];
 
         console.log('compare');
-        if (!(subject.destinationReached || subject.destinationReached)) {
+        if (!(subject.destinationReached || compare.destinationReached)) {
           if (subject.gridPosition.rowIndex === compare.gridPosition.rowIndex
             && subject.gridPosition.columnIndex === compare.gridPosition.columnIndex) {
             subject.collided = true;
@@ -198,8 +198,6 @@ class CrossRoadsGame {
   }
 
   _nodeClick(node) {
-    console.log(node._rowIndex);
-    console.log(node._columnIndex);
     if (!this._evaluateTrafficPatterns) {
       if (this.newTrafficPattern.last.hasExit(node)) {
         this.newTrafficPattern.addNode(node);
