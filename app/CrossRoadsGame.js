@@ -104,7 +104,7 @@ class CrossRoadsGame {
       x = Math.floor(Math.random() * this._grid.width);
       y = Math.floor(Math.random() * this._grid.height);
 
-      this._destinationNode = this._grid.getNode(x, y);
+      this._destinationNode = this._grid.getNode(y, x);
     }
     this._newTrafficPattern = new TrafficPattern(startNode);
 
