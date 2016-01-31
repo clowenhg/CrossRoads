@@ -39,7 +39,7 @@
         }
       }))
       .pipe(rename('client.js'))
-      .pipe(gulp.dest('./build'))
+      .pipe(gulp.dest('./web/build'))
       .pipe(rename('client.min.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true}))
