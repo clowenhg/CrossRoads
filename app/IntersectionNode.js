@@ -31,7 +31,7 @@ class IntersectionNode extends Sprite {
             this._mousedown = true;
             this._setTexture();
 
-            this._onClick(this._rowIndex, this._columnIndex);
+            this._onClick(this);
         });
 
         this.on('mouseup', function(){
@@ -75,6 +75,10 @@ class IntersectionNode extends Sprite {
     set west(value) {
         this._west = value;
         this._setTexture();
+    }
+
+    hasExit(node){
+        return(node === this._north || node === this._south || node === this._east || node === this._west);
     }
 
     _setTexture(){

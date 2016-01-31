@@ -1,26 +1,35 @@
 var IntersectionNode = require('./IntersectionNode.js');
 
 class TrafficGrid {
-    constructor(height, width) {
+    constructor(height, width, onClick) {
+        this._height = height;
+        this._width = width;
         this._map = [];
         
         for (var rowCounter = 0; rowCounter < height; rowCounter++) {
             var row = [];
             for (var columnCounter = 0; columnCounter < width; columnCounter++) {
-                row.push(new IntersectionNode(columnCounter, rowCounter));
+                row.push(new IntersectionNode(columnCounter, rowCounter, onClick));
             }
             this._map.push(row);
         }
     }
     
     get map() { return this._map; }
-    
+    get height() { return this._height; }
+    get width() { return this._width; }
+
     getNode(rowIndex, columnIndex) {
+        if(rowIndex >= this.width || columnIndex >= this.height){
+            return null;
+        }
+
         var row = this._map[rowIndex];
         
         if (row) {
             return row[columnIndex];
         }
+
         return undefined;
     }
     

@@ -1,6 +1,5 @@
 var CrossRoadsGame = require('./CrossRoadsGame.js');
 var Pixi = require('pixi.js');
-var RoadTile = require('./RoadTile.js');
 var Sprite = Pixi.Sprite;
 var loader = Pixi.loader;
 
@@ -10,8 +9,6 @@ class Game {
   constructor() {
     this.lastTime = 0;
     this.time = 0;
-
-    this.state = new CrossRoadsGame();
   }
 
   load(){
@@ -22,24 +19,22 @@ class Game {
 
   gameLoop(time){
     window.requestAnimationFrame(this.gameLoop.bind(this));
-    //console.log('render[' + time + ']');
-
-    if(time - this.lastTime > (1/60) * 1000){
-      //Call update
-    }
-
+    this.state.update(time);
     this.renderer.render(this.stage);
   }
 
   _setup() {
-    this.state.prepareLevel(5, 10);
-
     //Create the renderer
-    this.renderer = Pixi.autoDetectRenderer(640, 320);
+    this.renderer = Pixi.autoDetectRenderer(256, 256);
     var stage = this.stage = new Pixi.Container();
     var mapStage = this.mapStage = new Pixi.Container();
 
-    this.stage.addchild(this.mapStage);
+    var patternStage = new Pixi.Container();
+    this.state = new CrossRoadsGame(patternStage);
+    this.state.prepareLevel(4, 4);
+
+    this.stage.addChild(this.mapStage);
+    this.stage.addChild(patternStage);
 
     var map = this.state.grid.map;
     var x = 0, y = 0;
@@ -55,7 +50,6 @@ class Game {
       y++;
     });
 
-    debugger;
     //Add the canvas to the HTML document
     document.body.appendChild(this.renderer.view);
 

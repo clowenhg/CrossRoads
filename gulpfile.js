@@ -13,7 +13,7 @@
   gulp.task('pack', function(){
     return gulp.src('app/CrossRoads.js')
       .pipe(webpack({
-        watch: false,
+        watch: true,
         output: {
           libraryTarget: 'var',
           library: 'CrossRoads'
