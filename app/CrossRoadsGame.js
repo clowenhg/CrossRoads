@@ -97,7 +97,7 @@ class CrossRoadsGame {
       x = Math.floor(Math.random() * this._grid.width);
       y = Math.floor(Math.random() * this._grid.height);
 
-      startNode = this._grid.getNode(x, y);
+      startNode = this._grid.getNode(y, x);
     }
 
     while (!this._destinationNode || this._destinationNode === startNode) {
