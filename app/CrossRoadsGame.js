@@ -72,6 +72,7 @@ class CrossRoadsGame {
 
     this._evaluateTrafficPatterns = true;
     this._trafficPatterns.push(this._newTrafficPattern);
+    this._newTrafficPattern = null;
 
     this._trafficPatterns.forEach(function (pattern) {
       stage.addChild(pattern);
@@ -82,6 +83,8 @@ class CrossRoadsGame {
     if (this._trafficPatterns.length > this._mostSuccessfulPatterns) {
         this._mostSuccessfulPatterns = this._trafficPatterns.length;
     }
+
+    this._stepTime = Math.max(this._stepTime - this._dayCount * 5, 200);
 
     this._skipUpdates = 1;
   }
@@ -111,8 +114,8 @@ class CrossRoadsGame {
     this._newTrafficPattern = new TrafficPattern(startNode);
 
     this.patternStage.addChild(this._newTrafficPattern);
-    this.patternStage.addChild(this._newTrafficPattern.generateGrahpics(this._destinationNode, null, 0x00AA00));
-    this.patternStage.addChild(this._newTrafficPattern.generateGrahpics(startNode, null, 0x0000FF));
+    this.patternStage.addChild(this._newTrafficPattern.generateGraphics(this._destinationNode, null, 0xFF0000, true));
+    this.patternStage.addChild(this._newTrafficPattern.generateGraphics(startNode, null, 0x0088FF, true));
   }
 
   update(time) {
