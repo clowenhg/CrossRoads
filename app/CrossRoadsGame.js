@@ -77,6 +77,11 @@ class CrossRoadsGame {
       stage.addChild(pattern);
       pattern.startPathing();
     });
+    
+    this._dayCount++;
+    if (this._trafficPatterns.length > this._mostSuccessfulPatterns) {
+        this._mostSuccessfulPatterns = this._trafficPatterns.length;
+    }
 
     this._skipUpdates = 1;
   }
@@ -107,7 +112,7 @@ class CrossRoadsGame {
 
     this.patternStage.addChild(this._newTrafficPattern);
     this.patternStage.addChild(this._newTrafficPattern.generateGrahpics(this._destinationNode, null, 0x00AA00));
-    this.patternStage.addChild(this._newTrafficPattern.generateGrahpics(startNode, null, 0xFF0000));
+    this.patternStage.addChild(this._newTrafficPattern.generateGrahpics(startNode, null, 0x0000FF));
   }
 
   update(time) {
