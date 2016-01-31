@@ -10,14 +10,18 @@ var tileWidth = 64;
 class Game {
   constructor(config) {
     config = config || {};
+    console.log(config.parent);
     config.columns = config.columns || 4;
     config.rows = config.rows || 4;
 
+    debugger;
     config.random = !!config.random || true;
-    config.seed = !!config.seed || this._getRandomSeed();
+    config.seed = config.seed || this._getRandomSeed();
 
     this.lastTime = 0;
     this.time = 0;
+
+    this.stop = false;
 
     this.config = config;
   }
@@ -28,8 +32,15 @@ class Game {
       .load(this._setup.bind(this));
   }
 
+  unload(){
+    this.stop = true;
+    this.renderer.destroy(true);
+  }
+
   gameLoop(time) {
-    window.requestAnimationFrame(this.gameLoop.bind(this));
+    if(!this.stop){
+      window.requestAnimationFrame(this.gameLoop.bind(this));
+    }
     this.state.update(time);
     this.renderer.render(this.paddingStage);
   }

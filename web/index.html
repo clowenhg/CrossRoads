@@ -1,8 +1,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
 <script src="build/client.js"></script>
@@ -30,18 +30,35 @@
     </div>
 </div>
 <script>
-    $('.play').on('click', function(){
-        var parent = $(".game");
-        var seed = $('#seed').value();
+    var parent = $(".game");
+    var game;
 
-        var game = new CrossRoads({
+    $('#play').on('click', function(){
+        var seed = $('#seed').val();
+
+        var load = false;
+        if(game){
+            game.unload();
+        }
+        else{
+            load = true;
+        }
+
+        console.log('seed ' + seed);
+        game = new CrossRoads({
             rows: 8,
             columns: 8,
             parent: parent,
             seed: seed
         });
 
-        game.load();
+        if(load){
+            game.load();
+        }
+        else{
+            game._setup();
+        }
+
     });
 </script>
 </body>
