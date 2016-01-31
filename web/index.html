@@ -13,21 +13,30 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="col-md-2">
-            <div class="form-control">
+        <div class="col-md-3" >
+            <div>
+                <label>Map Type:</label>
+                <input type="radio" name="mapType" value="randomMesh" checked="true" onclick="setMapType(this.value)">Random Mesh</input>
+                <input type="radio" name="mapType" value="fullMesh" onclick="setMapType(this.value)">Full Mesh</input>
+            </div>
+            <div>
                 <label for="seed">Seed: </label>
-                <input type="text" name="seed" id="seed">
+                <input type="text" name="seed" id="seed" class="form-control">
             </div>
-            <div class="form-control">
+            <div>
                 <label for="rows">Rows: </label>
-                <input type="text" name="rows" id="rows" value="5">
+                <input type="text" name="rows" id="rows" value="5" class="form-control">
             </div>
-            <div class="form-control">
+            <div>
                 <label for="cols">Columns: </label>
-                <input type="text" name="cols" id="cols" value="5">
+                <input type="text" name="cols" id="cols" value="5" class="form-control">
             </div>
-            <div class="form-control">
+            <div>
                 <button id="play">Play</button>
+            </div>
+            <div>
+                <label id="dayCount" style="display:block"></label>
+                <label id="highScore" style="display:block"></label>
             </div>
         </div>
         <div class="col-md-7">
@@ -40,7 +49,12 @@
 <script>
     var parent = $(".game");
     var game;
-
+    var mapType;
+    
+    function setMapType(newMapType) {
+        mapType = newMapType;
+    }
+    
     $('#play').on('click', function(){
         var seed = $('#seed').val();
         var rows = $('#rows').val();
@@ -55,11 +69,20 @@
         }
 
         console.log('seed ' + seed);
+        console.log('mapType ' + mapType);
         game = new CrossRoads({
             rows: rows,
             columns: cols,
             parent: parent,
-            seed: seed
+            seed: seed,
+            mapType: mapType
+        }, 
+        function() {
+            var dayCount = $('#dayCount');
+            var highScore = $('#highScore');
+            
+            dayCount[0].innerHTML = 'Current Day: ' + game.state.dayCount;
+            highScore[0].innerHTML = 'Highscore: ' + game.state.mostSuccessfulPatterns;
         });
 
         if(load){

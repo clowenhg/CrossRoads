@@ -3,7 +3,7 @@ var TrafficGrid = require('./TrafficGrid.js');
 var TrafficPattern = require('./TrafficPattern.js');
 
 class CrossRoadsGame {
-  constructor(patternStage, seed) {
+  constructor(patternStage, seed, mapType) {
     this._grid = null;
     this._trafficPatterns = null;
     this._newTrafficPattern = null;
@@ -12,6 +12,7 @@ class CrossRoadsGame {
     this._evaluateTrafficPatterns = false;
     this.lastTime = 0;
     this._stepTime = 400;
+    this._mapType = mapType;
 
     this.patternStage = patternStage;
     this._seed = seed;
@@ -49,7 +50,14 @@ class CrossRoadsGame {
    */
   prepareLevel(rows, columns) {
     this._grid = new TrafficGrid(rows, columns, this._nodeClick.bind(this), this._seed);
-    this._grid.makeRandomMesh();
+    
+    if (this._mapType == 'fullMesh'){
+        this._grid.makeFullMesh();
+    }
+    else if (this._mapType == 'randomMesh') {
+        this._grid.makeRandomMesh();
+    }
+    
 
     this._trafficPatterns = [];
     this._dayCount = 0;

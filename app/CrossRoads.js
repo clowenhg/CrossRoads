@@ -8,14 +8,14 @@ var TrafficGrid = require('./TrafficGrid.js');
 var tileWidth = 64;
 
 class Game {
-  constructor(config) {
+  constructor(config, updateUiCallback) {
     config = config || {};
-    console.log(config.parent);
     config.columns = config.columns || 4;
     config.rows = config.rows || 4;
 
     config.random = !!config.random || true;
     config.seed = config.seed || this._getRandomSeed();
+    config.mapType = config.mapType || 'randomMesh';
 
     this.lastTime = 0;
     this.time = 0;
@@ -23,6 +23,7 @@ class Game {
     this.stop = false;
 
     this.config = config;
+    this.updateUi = updateUiCallback;
   }
 
   load() {
@@ -41,6 +42,7 @@ class Game {
       window.requestAnimationFrame(this.gameLoop.bind(this));
       this.state.update(time);
       this.renderer.render(this.paddingStage);
+      this.updateUi();
     }
   }
 
@@ -78,7 +80,7 @@ class Game {
     this.paddingStage.addChild(stage);
 
     var patternStage = new Pixi.Container();
-    this.state = new CrossRoadsGame(patternStage, this.config.seed);
+    this.state = new CrossRoadsGame(patternStage, this.config.seed, this.config.mapType);
     this.state.prepareLevel(this.config.rows, this.config.columns);
 
     this.stage.addChild(this.mapStage);
