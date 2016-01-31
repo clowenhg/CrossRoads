@@ -19,6 +19,14 @@
                 <input type="text" name="seed" id="seed">
             </div>
             <div class="form-control">
+                <label for="rows">Rows: </label>
+                <input type="text" name="rows" id="rows" value="5">
+            </div>
+            <div class="form-control">
+                <label for="cols">Columns: </label>
+                <input type="text" name="cols" id="cols" value="5">
+            </div>
+            <div class="form-control">
                 <button id="play">Play</button>
             </div>
         </div>
@@ -35,6 +43,8 @@
 
     $('#play').on('click', function(){
         var seed = $('#seed').val();
+        var rows = $('#rows').val();
+        var cols = $('cols').val();
 
         var load = false;
         if(game){
@@ -46,8 +56,8 @@
 
         console.log('seed ' + seed);
         game = new CrossRoads({
-            rows: 8,
-            columns: 8,
+            rows: rows,
+            columns: cols,
             parent: parent,
             seed: seed
         });

@@ -62,7 +62,7 @@ class TrafficPattern extends Container {
         }
     }
 
-    generateGrahpics(node, nodeTo, color){
+    generateGraphics(node, nodeTo, color, outline){
         var gfx = new Graphics();
         color = color || 0x0088FF;
 
@@ -101,9 +101,18 @@ class TrafficPattern extends Container {
             gfx.endFill();
         }
 
-        gfx.beginFill(color);
-        gfx.drawCircle(0, 0, 8);
-        gfx.endFill();
+        if(!outline){
+            gfx.beginFill(color);
+            gfx.drawCircle(0, 0, 8);
+            gfx.endFill();
+        }
+
+        if(outline){
+            gfx.lineStyle(4, color);
+            gfx.beginFill(color, 0);
+            gfx.drawCircle(0,0,12);
+            gfx.endFill();
+        }
 
         gfx.x = x + 32;
         gfx.y = y + 32;
@@ -126,10 +135,12 @@ class TrafficPattern extends Container {
         this._stepGfx.y = this.gridPosition.rowIndex * 64 + 32;
         this._stepGfx.x = this.gridPosition.columnIndex * 64 + 32;
 
-        this._setStepGraphics(0xFFFF00, 8);
-
         this.removeChildren();
-        this.addChild(this._stepGfx);
+
+        if(!this.collided){
+            this._setStepGraphics(0xFFFF00, 8);
+            this.addChild(this._stepGfx);
+        }
     }
 
     stopPathing(){
@@ -159,7 +170,7 @@ class TrafficPattern extends Container {
         this.removeChildren();
 
         for(var i = 0; i < this.route.length; i++){
-            this.addChild(this.generateGrahpics(this.route[i], this.route[i + 1]));
+            this.addChild(this.generateGraphics(this.route[i], this.route[i + 1]));
         }
     }
 }

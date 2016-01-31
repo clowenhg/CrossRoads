@@ -39,9 +39,9 @@ class Game {
   gameLoop(time) {
     if(!this.stop){
       window.requestAnimationFrame(this.gameLoop.bind(this));
+      this.state.update(time);
+      this.renderer.render(this.paddingStage);
     }
-    this.state.update(time);
-    this.renderer.render(this.paddingStage);
   }
 
   _setup() {
