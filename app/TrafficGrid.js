@@ -9,7 +9,7 @@ class TrafficGrid {
         for (var rowCounter = 0; rowCounter < height; rowCounter++) {
             var row = [];
             for (var columnCounter = 0; columnCounter < width; columnCounter++) {
-                row.push(new IntersectionNode(columnCounter, rowCounter, onClick));
+                row.push(new IntersectionNode(rowCounter, columnCounter, onClick));
             }
             this._map.push(row);
         }
@@ -52,54 +52,62 @@ class TrafficGrid {
         }
     }
     
-    getAvailableConnectionsCount(node) {
-        var connectionsCount = 0;
+    getValidConnections(node) {
+        var validConnection = [];
         
-        if (node.rowIndex == 0 || node.rowIndex == this._map.length) {
-            connectionsCount++;
+        if (node.rowIndex > 0){
+            validConnection.push("north");
         }
-        else if (node.rowIndex > 0 && node.rowIndex < this._map.length) {
-            connectionsCount += 2;
+        if (node.rowIndex < this._map.length) {
+            validConnection.push("south");
         }
         
         var row = this._map[node.rowIndex];
-        if (node.columnIndex == 0 || node.columnIndex == row.length) {
-            connectionsCount++;
+        if (node.columnIndex > 0) {
+            validConnection.push("west");
         }
-        else if (node.columnIndex > 0 && node.columnIndex < row.length) {
-            connectionsCount += 2;
+        if (node.columnIndex < row.length) {
+            validConnection.push("east");
         }
         
-        return connectionsCount;
+        return validConnection;
     }
     
     makeRandomMesh() {
-        throw "Not Yet Implemented!  Cause I'm fucking tired..."
+        var self = this;
+        this._map.forEach(function(item) {
+            item.forEach(function(item) { self._randomizeConnections(item); });
+        });
     }
     
     makeFullMesh() {
-        for (var rowCounter = 0; rowCounter < this._map.length; rowCounter++) {
-            var row = this._map[rowCounter];
-            for (var columnCounter = rowCounter % 2; columnCounter < row.length; columnCounter++) {
-                var sourceNode = row[columnCounter];
-                var northNode = this.getNode(rowCounter - 1, columnCounter);
-                var southNode = this.getNode(rowCounter + 1, columnCounter);
-                var eastNode = this.getNode(rowCounter, columnCounter + 1);
-                var westNode = this.getNode(rowCounter, columnCounter - 1);
-                
-                if (northNode) {
-                    this.connectNodes(sourceNode, northNode, "north");
-                }
-                if (southNode) {
-                    this.connectNodes(sourceNode, southNode, "south");
-                }
-                if (eastNode) {
-                    this.connectNodes(sourceNode, eastNode, "east");
-                }
-                if (westNode) {
-                    this.connectNodes(sourceNode, westNode, "west");
-                }
-            }
+        var self = this;
+        this._map.forEach(function(item) {
+            item.forEach(function(item) { self._setAllConnections(item); });
+        });
+    }
+    
+    _randomizeConnections(node) {
+        throw "Not Yet Implemented!  Cause I'm fucking tired..."
+    }
+    
+    _setAllConnections(node) {
+        var northNode = this.getNode(node.rowIndex - 1, node.columnIndex);
+        var southNode = this.getNode(node.rowIndex + 1, node.columnIndex);
+        var eastNode = this.getNode(node.rowIndex, node.columnIndex + 1);
+        var westNode = this.getNode(node.rowIndex, node.columnIndex - 1);
+        
+        if (northNode) {
+            this.connectNodes(node, northNode, "north");
+        }
+        if (southNode) {
+            this.connectNodes(node, southNode, "south");
+        }
+        if (eastNode) {
+            this.connectNodes(node, eastNode, "east");
+        }
+        if (westNode) {
+            this.connectNodes(node, westNode, "west");
         }
     }
 }
