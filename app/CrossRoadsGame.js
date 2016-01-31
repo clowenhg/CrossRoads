@@ -44,6 +44,7 @@ class CrossRoadsGame {
     }
     
     update() {
+        //Check if we're updating patterns, or waiting for user to build new path
         this._updateTrafficPatterns();
     }
     

@@ -37,6 +37,9 @@ class Game {
     //Create the renderer
     this.renderer = Pixi.autoDetectRenderer(640, 320);
     var stage = this.stage = new Pixi.Container();
+    var mapStage = this.mapStage = new Pixi.Container();
+
+    this.stage.addchild(this.mapStage);
 
     var map = this.state.grid.map;
     var x = 0, y = 0;
@@ -46,7 +49,7 @@ class Game {
       row.forEach(function(node){
         node.x = x * 64;
         node.y = y * 64;
-        stage.addChild(node);
+        mapStage.addChild(node);
         x++;
       });
       y++;

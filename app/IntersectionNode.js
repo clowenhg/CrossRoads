@@ -3,8 +3,15 @@ var Pixi = require('pixi.js'),
   Sprite = Pixi.Sprite;
 
 class IntersectionNode extends Sprite {
-    constructor (rowIndex, columnIndex) {
+    constructor (rowIndex, columnIndex, onClick) {
         super();
+
+        if(!onClick){
+            throw new Error('Justin says we needed a check');
+        }
+
+        this._onClick = onClick;
+
         this._rowIndex = rowIndex;
         this._columnIndex = columnIndex;
 
@@ -23,6 +30,8 @@ class IntersectionNode extends Sprite {
         this.on('mousedown', function(){
             this._mousedown = true;
             this._setTexture();
+
+            this._onClick(this._rowIndex, this._columnIndex);
         });
 
         this.on('mouseup', function(){
