@@ -33,8 +33,18 @@ class IntersectionNode extends Sprite {
 
             this._onClick(this);
         });
+        this.on('touchstart', function(){
+            this._mousedown = true;
+            this._setTexture();
+
+            this._onClick(this);
+        });
 
         this.on('mouseup', function(){
+            this._mousedown = false;
+            this._setTexture();
+        });
+        this.on('touchend', function(){
             this._mousedown = false;
             this._setTexture();
         });
